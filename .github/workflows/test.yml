@@ -1,0 +1,22 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and test
+      run: |
+        sudo apt update
+        sudo apt-get install -y python3.7
+        sudo apt-get install python3-setuptools
+        sudo pip3 install virtualenv
+        cd project
+        virtualenv -p python3.7 projectenv
+        source projectenv/bin/activate
+        pip install -r requirements.txt
+        python tests/tests.py
